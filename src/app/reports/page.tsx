@@ -8,11 +8,12 @@ import { AnalyticsOverview as OverviewSection } from "@/components/analytics/Ana
 import { Button } from "@/components/ui/Button";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { createDateRange, cn } from "@/lib/utils";
+import { DateRange } from "@/types";
 
-const defaultRange = { ...createDateRange(30), preset: "30" as const };
+const defaultRange: DateRange = { ...createDateRange(30), preset: "30" };
 
 export default function ReportsPage() {
-  const [range, setRange] = useState(defaultRange);
+  const [range, setRange] = useState<DateRange>(defaultRange);
   const { data: habits = [] } = useHabits();
   const overviewQuery = useAnalyticsOverview(range);
 

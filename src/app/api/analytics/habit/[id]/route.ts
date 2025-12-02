@@ -1,13 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { eachDayOfInterval, parseISO } from "date-fns";
 import { supabase } from "@/lib/supabase";
 import { buildHeatmap, buildTrend, calculateStreaks, formatISODate, isHabitDueOnDate } from "@/lib/utils";
 
-interface RouteParams {
-  params: { id: string };
-}
-
-export async function GET(request: Request, { params }: RouteParams) {
+export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   const { searchParams } = new URL(request.url);
   const startDate = searchParams.get("start_date");
   const endDate = searchParams.get("end_date");
@@ -16,7 +12,7 @@ export async function GET(request: Request, { params }: RouteParams) {
     return NextResponse.json({ message: "Missing start_date or end_date." }, { status: 400 });
   }
 
-  const habitId = params.id;
+  const { id: habitId } = await context.params;
 
   const [{ data: habit, error: habitError }, { data: completions, error: completionError }] = await Promise.all([
     supabase.from("habits").select("*").eq("id", habitId).single(),

@@ -1,12 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
-interface RouteParams {
-  params: { id: string };
-}
-
-export async function DELETE(_: Request, { params }: RouteParams) {
-  const { error } = await supabase.from("habit_completions").delete().eq("id", params.id);
+export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
+  const { error } = await supabase.from("habit_completions").delete().eq("id", id);
 
   if (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });

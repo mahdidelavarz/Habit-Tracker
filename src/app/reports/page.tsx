@@ -126,17 +126,21 @@ export default function ReportsPage() {
                       <div className="mt-6">
                         <p className="text-sm font-semibold text-slate-700">Monthly heatmap</p>
                         <div className="mt-3 grid grid-cols-7 gap-1 text-xs text-slate-400">
-                          {analytics.heatmap.map((cell) => (
-                            <span
-                              key={cell.date}
-                              className={cn("h-7 rounded-md border border-slate-100", {
-                                "bg-slate-100": cell.intensity === 0,
-                                "bg-slate-300": cell.intensity === 1,
-                                "bg-blue-500": cell.intensity >= 2,
-                              })}
-                              title={`${cell.date} - ${cell.completed ? "Completed" : "Missed"}`}
-                            />
-                          ))}
+                          {analytics.heatmap.map((cell) => {
+                            const intensityClass =
+                              cell.intensity === 0
+                                ? "bg-slate-100"
+                                : cell.intensity === 1
+                                  ? "bg-slate-300"
+                                  : "bg-blue-500";
+                            return (
+                              <span
+                                key={cell.date}
+                                className={cn("h-7 rounded-md border border-slate-100", intensityClass)}
+                                title={`${cell.date} - ${cell.completed ? "Completed" : "Missed"}`}
+                              />
+                            );
+                          })}
                         </div>
                       </div>
                     </>

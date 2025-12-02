@@ -27,7 +27,7 @@ export default function ReportsPage() {
 
   const handlePresetChange = (preset: "7" | "30" | "90" | "custom") => {
     if (preset === "custom") return;
-    setRange({ ...createDateRange(Number(preset)), preset });
+    setRange({ ...createDateRange(Number(preset)), preset } as DateRange);
   };
 
   const handleCustomRangeChange = (field: "startDate" | "endDate", value: string) => {

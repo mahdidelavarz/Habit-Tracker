@@ -111,9 +111,10 @@ export default function ReportsPage() {
                           {analytics.trend.map((point) => (
                             <span key={point.date} className="block flex-1 rounded-full bg-slate-100">
                               <span
-                                className={cn("block rounded-full bg-blue-500 text-xs text-transparent", {
-                                  "bg-green-500": point.completed === point.due,
-                                })}
+                                className={cn(
+                                  "block rounded-full text-xs text-transparent",
+                                  point.completed === point.due ? "bg-green-500" : "bg-blue-500",
+                                )}
                                 style={{ height: `${(point.completed / Math.max(point.due, 1)) * 100}%` }}
                               >
                                 .
